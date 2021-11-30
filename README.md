@@ -3,11 +3,22 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Description
-![alt googlebooks](assets/books.gif)
 
 Save books found with the Google Books API. Initially this app used a RESTful API, refactored to be a GraphQL API. It uses the MERN stack and utilizes JWT for authentication. A user may sign up and log in to save and delete books from their list.
 
 Try it out at this [link](https://immense-mesa-18388.herokuapp.com/)
+
+## Preview
+![alt googlebooks](assets/books.gif)
+
+## Table of Contents
+
+* [Techonologies Used](#technologies-used)
+* [Usage](#usage)
+* [Code Snippet](#code-snippet)
+* [License](#license)
+* [Questions](#questions)
+* [Author Links](#author-links)
 
 ## Technologies Used
 - React - JavaScript library for building UIs
@@ -27,6 +38,10 @@ Try it out at this [link](https://immense-mesa-18388.herokuapp.com/)
 - Visual Studio Code - text editor
 - ScreenToGif - for recording short screen captures
 - Heroku - where the project is deployed
+
+## Usage
+
+Click [here](https://immense-mesa-18388.herokuapp.com/) to test the functionality of this application. Sign up and search your favorite books to save them. If you like, you may also remove books from your saved books
 
 ## Code Snippets
 short snippet of GraphQL typeDef
@@ -108,6 +123,17 @@ const handleFormSubmit = async (event) => {
     });
 };
 ```
+
+## License
+
+This application is covered under the MIT license.
+
+## Questions
+
+Have any questions? My Github and email:
+
+[My Github Link](https://github.com/mushymane)  
+Email: mushymanee@gmail.com
 
 ## Author Links
 [LinkedIn](https://www.linkedin.com/in/luigilantin/)
