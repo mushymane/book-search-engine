@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Description
-![alt googlebooks](src/assets/mane.gif)
+![alt googlebooks](assets/books.gif)
 
 Save books found with the Google Books API. Initially this app used a RESTful API, refactored to be a GraphQL API. It uses the MERN stack and utilizes JWT for authentication. A user may sign up and log in to save and delete books from their list.
 
@@ -29,31 +29,84 @@ Try it out at this [link]()
 - Heroku - where the project is deployed
 
 ## Code Snippets
-React/JSX - component that renders the contents of the website
+short snippet of GraphQL typeDef
 ```
-const [currentPage, setCurrentPage] = useState('About');
+input bookToSave {
+        bookId: String
+        authors: [String]
+        description: String
+        title: String
+        image: String
+        link: String
+    }
 
-const renderPage = () => {
-    if (currentPage === 'About') {
-        return <About />;
-    }
-    if (currentPage === 'Portfolio') {
-        return <Portfolio />;
-    }
-    if (currentPage === 'Contact') {
-        return <Contact />;
-    }
+type Query {
+    me: User
 }
 
-const handlePageChange = (page) => setCurrentPage(page);
+type Mutation {
+    addUser(username: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
+    saveBook(input: bookToSave): User
+    removeBook(bookId: String!): User
+}
+```
+onClick function to save a book
+```
+const handleSaveBook = async (bookId) => {
+    // find the book in `searchedBooks` state by the matching id
+    const bookToSave = searchedBooks.find((book) => book.bookId === bookId);
 
-return (
-    <div className="portfolio-container justify-content-center">
-        <Navbar currentPage={currentPage} handlePageChange={handlePageChange} />
-        {renderPage()}
-        <Footer />
-    </div>
-)
+    // get token
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+        return false;
+    }
+
+    try {
+        const response = await saveBook({
+            variables: {
+            input: bookToSave
+            }
+        })
+
+        // if book successfully saves to user's account, save book id to state
+        setSavedBookIds([...savedBookIds, bookToSave.bookId]);
+    } catch (err) {
+        console.error(err);
+    }
+};
+```
+Signup form component
+```
+const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    // check if form has everything (as per react-bootstrap docs)
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+
+    try {
+        const { data } = await addUser({
+            variables: { ...userFormData }
+        })
+
+        Auth.login(data.addUser.token);
+    } catch (err) {
+        console.error(err);
+        setShowAlert(true);
+    }
+
+    setUserFormData({
+        username: '',
+        email: '',
+        password: '',
+    });
+};
 ```
 
 ## Author Links
